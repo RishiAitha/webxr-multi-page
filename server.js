@@ -8,20 +8,20 @@ let groups = [];
 let inputs = [];
 
 app.use(express.json());
-app.use(express.static('dist'));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/dist/index.html');
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.get('/vr', (req, res) => {
-    res.sendFile(__dirname + '/dist/vr.html');
+    res.sendFile(path.join(__dirname, 'dist', 'vr.html'));
 });
 
 app.get('/desktop', (req, res) => {
-    res.sendFile(__dirname + '/dist/desktop.html');
+    res.sendFile(path.join(__dirname, 'dist', 'desktop.html'));
 });
 
 app.get('/clients', (req, res) => {
