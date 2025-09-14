@@ -83,6 +83,7 @@ async function checkConnection() {
         data.forEach(({ desktopID, vrID }) => {
             if (!connected && vrID == `${myID}`) {
                 connected = true;
+                foundConnection = true;
                 connectedClient = desktopID;
                 console.log('Connected to:', desktopID);
             } else if (vrID == `${myID}`) {
