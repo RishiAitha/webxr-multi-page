@@ -104,7 +104,10 @@ async function sendInput(inputText) {
         const response = await fetch('/input', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ inputText })
+            body: JSON.stringify({
+                clientID: `${myID}`,
+                inputText: inputText
+            })
         });
 
         if (!response.ok) {
@@ -134,9 +137,13 @@ async function onFrame(delta, time, {scene, camera, renderer, player, controller
         if (controller) {
             const {gamepad, raySpace, mesh} = controller;
             if (gamepad.getButtonClick(XR_BUTTONS.TRIGGER)) {
-                const inputText = i == 0 ? 'Pushed Right Trigger' : 'Pushed Left Trigger';
-                console.log(inputText);
-                await sendInput(inputText);
+                if (connected) {
+                    const inputText = i == 0 ? 'Pushed Right Trigger' : 'Pushed Left Trigger';
+                    console.log(inputText);
+                    await sendInput(inputText);
+                } else {
+                    console.log('Input detected, but not connected');
+                }
             }
         }
     }

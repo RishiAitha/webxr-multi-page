@@ -31,8 +31,22 @@ app.get('/groups', (req, res) => {
 });
 
 app.get('/inputs', (req, res) => {
-    res.json(inputs);
-    inputs = [];
+    const vrID = req.query.filter;
+
+    if (vrID) {
+        const filteredInputs = inputs.filter(input => {
+            return `${input.clientID}` == vrID;
+        });
+
+        inputs = inputs.filter(input => {
+            return `${input.clientID}` != vrID;
+        });
+        
+        res.json(filteredInputs);
+    } else {
+        res.json(inputs);
+        inputs = [];
+    }
 });
 
 app.post('/register', (req, res) => {
@@ -81,8 +95,8 @@ app.post('/connect', (req, res) => {
 });
 
 app.post('/input', (req, res) => {
-    const { inputText } = req.body;
-    inputs.push(inputText);
+    const { clientID, inputText } = req.body;
+    inputs.push({ clientID, inputText });
     console.log('Read Input:', inputText);
     res.json({ success: true });
 })

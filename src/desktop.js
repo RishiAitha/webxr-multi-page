@@ -99,14 +99,14 @@ async function displayClients() {
 }
 
 async function displayInputs() {
-        try {
-        const response = await fetch('/inputs');
+    try {
+        const response = await fetch(`/inputs?filter=${connectedClient}`);
         if (!response.ok) {
             throw new Error('Request Failed');
         }
         const data = await response.json();
 
-        data.forEach((inputText) => {
+        data.forEach(({ clientID, inputText }) => {
             console.log(inputText);
             const inputDisplay = document.createElement('div');
             inputDisplay.innerHTML = inputText;
